@@ -5,57 +5,47 @@
 //  Created by Kevin Waltz on 10.06.22.
 //
 
-import SwiftUI
 import IONavigation
+import SwiftUI
+// import AppKit
 
 struct NavigatorView: View {
-    
     var body: some View {
         #if os(iOS)
         if horizontalSizeClass == .compact {
             Tabbar(items: tabbarItems,
-                   showTitle: false,
                    backgroundColor: Color("primaryBackground"),
                    foregroundColor: .blue,
                    style: .circular)
         } else {
             Sidebar(backgroundColor: Color("primaryBackground"),
                     foregroundColor: .blue,
-                    header: "IONavigation",
-                    itemGroups: sidebarItemGroups,
-                    actionIcon: Image(systemName: "plus.circle.fill"),
-                    action: add)
+                    header: AnyView(SidebarHeader(action: add)),
+                    footer: AnyView(SidebarFooter()),
+                    itemGroups: sidebarItemGroups)
         }
         #else
-        Sidebar(backgroundColor: Color("primaryBackground"),
+        Sidebar(backgroundTranslucency: false,
+                backgroundColor: .yellow,
                 foregroundColor: .blue,
-                header: "IONavigation",
-                itemGroups: sidebarItemGroups,
-                actionIcon: Image(systemName: "plus.circle.fill"),
-                action: add)
+                header: AnyView(SidebarHeader(action: add)),
+                footer: AnyView(SidebarFooter()),
+                itemGroups: sidebarItemGroups)
+                
         #endif
     }
-    
-    
     
     // MARK: - Variables
     
     #if os(iOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     #endif
-    
-    @State var shouldShowNewApp = false
-    
-    
-    
+        
     // MARK: - Functions
     
     private func add() {
         // Example integration of an additional button in the sidebar
-        return
     }
-    
-    
     
     // MARK: - Tabs
     
@@ -65,7 +55,6 @@ struct NavigatorView: View {
     private var tabbarItems: [Item] {
         HomeTab.items
     }
-    
     
     // My favorite way of dealing with the data for the items is to create enums, which I can iterate and map to create the needed items.
     
@@ -84,5 +73,10 @@ struct NavigatorView: View {
     private var settingsGroup: ItemGroup {
         ItemGroup(id: "settings", header: "Settings", items: SettingsTab.items, isCollapsable: false)
     }
-    
+}
+
+struct NavigatorView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigatorView()
+    }
 }

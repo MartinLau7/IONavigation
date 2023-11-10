@@ -34,7 +34,7 @@ public struct Item: Identifiable, Equatable {
     
     public let id: String
     public let title: String
-    public let detailView: AnyView?
+    @State public var detailView: AnyView?
     public let image: Image
     
     public let defaultTitleColor: Color

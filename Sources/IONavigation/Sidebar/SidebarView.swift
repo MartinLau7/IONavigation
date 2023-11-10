@@ -8,17 +8,12 @@
 import SwiftUI
 
 struct SidebarView: View {
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if let header {
-                SidebarHeader(header: header,
-                              font: headerFont ?? .system(size: Values.navigationTextSize, weight: .semibold),
-                              color: foregroundColor,
-                              actionIcon: actionIcon,
-                              actionTooltip: actionTooltip,
-                              actionShortcut: actionShortcut,
-                              action: action)
+                header
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, Values.minorPadding)
             }
             
             ScrollView(showsIndicators: false) {
@@ -31,42 +26,44 @@ struct SidebarView: View {
                                       isCollapsable: group.isCollapsable)
                     }
                 }
-                .padding(.bottom, Values.minorPadding)
+            }
+            
+            if let footer {
+                footer
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, Values.minorPadding)
             }
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, Values.middlePadding)
         #if os(macOS)
-        .if(backgroundTranslucency) { sidebar in
-            sidebar.translucentBackground()
-        }
-        .if(!backgroundTranslucency) { sidebar in
-            sidebar.background(backgroundColor)
-        }
+            .if(backgroundTranslucency) { sidebar in
+                sidebar.translucentBackground()
+            }
+            .if(!backgroundTranslucency) { sidebar in
+                sidebar.background(backgroundColor)
+            }
         #else
-        .background(backgroundColor)
+            .background(backgroundColor)
         #endif
+            .onAppear {
+                print("1")
+            }
+            .onAppear(perform: {
+                print("1")
+            })
     }
     
-    
-    
     // MARK: - Variables
-    
     
     @Binding public var selectedId: String
     
     let backgroundTranslucency: Bool
     let backgroundColor: Color
     let foregroundColor: Color
-    let header: String?
-    let headerFont: Font?
+    let header: AnyView?
+    let footer: AnyView?
     
     let itemGroups: [ItemGroup]
     let itemFont: Font?
-    
-    let actionIcon: Image?
-    let actionTooltip: String?
-    let actionShortcut: KeyboardShortcut?
-    let action: (() -> Void)?
-    
 }

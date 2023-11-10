@@ -5,12 +5,11 @@
 //  Created by Kevin Waltz on 10.06.22.
 //
 
-import SwiftUI
 import IONavigation
+import SwiftUI
 
 enum HomeTab: String, CaseIterable {
     case listen, discover, radio, search
-    
     
     var title: String {
         switch self {
@@ -48,15 +47,12 @@ enum HomeTab: String, CaseIterable {
         }
     }
     
-    
-    
     // Items for navigation
     
     static var items: [Item] {
         let background = AnyView(Capsule().fill(
             LinearGradient(gradient: Gradient(colors: [.red, .orange]), startPoint: .topLeading, endPoint: .bottomTrailing))
         )
-        
         return HomeTab.allCases.map { Item(id: $0.rawValue,
                                            title: $0.title,
                                            detailView: AnyView(Text($0.detail)),
@@ -64,5 +60,4 @@ enum HomeTab: String, CaseIterable {
                                            selectionBackground: background,
                                            view: $0.view) }
     }
-    
 }

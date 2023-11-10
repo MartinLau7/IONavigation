@@ -9,7 +9,6 @@ import SwiftUI
 
 @main
 struct IONavigationExampleApp: App {
-    
     var body: some Scene {
         WindowGroup {
             NavigatorView()
@@ -18,5 +17,4 @@ struct IONavigationExampleApp: App {
         .windowStyle(HiddenTitleBarWindowStyle())
         #endif
     }
-    
 }

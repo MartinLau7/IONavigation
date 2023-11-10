@@ -5,18 +5,18 @@
 //  Created by Kevin Waltz on 10.06.22.
 //
 
-import SwiftUI
 import IONavigation
+import SwiftUI
 
 enum LibraryTab: String, CaseIterable {
-    case recently, albums, titles
-    
+    case recently, albums, titles, names
     
     var title: String {
         switch self {
         case .recently: return "Recently Added"
         case .albums: return "Albums"
         case .titles: return "Titles"
+        default: return "未知"
         }
     }
     
@@ -25,6 +25,8 @@ enum LibraryTab: String, CaseIterable {
         case .recently: return Image(systemName: "clock")
         case .albums: return Image(systemName: "square.stack")
         case .titles: return Image(systemName: "music.note")
+        default:
+            return Image(systemName: "music.note")
         }
     }
     
@@ -33,10 +35,10 @@ enum LibraryTab: String, CaseIterable {
         case .recently: return AnyView(BasicView())
         case .albums: return AnyView(BasicView())
         case .titles: return AnyView(BasicView())
+        default:
+            return AnyView(BasicView())
         }
     }
-    
-    
     
     // Items for navigation
     
@@ -48,5 +50,4 @@ enum LibraryTab: String, CaseIterable {
         
         return LibraryTab.allCases.map { Item(id: $0.rawValue, title: $0.title, image: $0.icon, selectionBackground: background, view: $0.view) }
     }
-    
 }

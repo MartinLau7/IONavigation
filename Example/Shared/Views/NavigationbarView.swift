@@ -5,11 +5,10 @@
 //  Created by Kevin Waltz on 10.06.22.
 //
 
-import SwiftUI
 import IONavigation
+import SwiftUI
 
 struct NavigationbarView: View {
-    
     var body: some View {
         VStack(spacing: 0) {
             Navigationbar(titleItem: AnyView(navigationTitleItem))
@@ -25,28 +24,22 @@ struct NavigationbarView: View {
     
     private var navigationTitleItem: some View {
         Text("Title Item")
-            .font(.body)
+            .font(.title)
             .padding(.vertical, 4)
             .padding(.horizontal, 12)
-            .foregroundColor(.white)
-            .background(.blue)
+            .foregroundColor(.black)
             .clipShape(Capsule())
     }
-    
-    
     
     // MARK: - Variables
     
     @StateObject private var sidebarSelection = SidebarSelection.shared
-    
-    
     
     // MARK: - Functions
     
     private func selectSearchTab() {
         sidebarSelection.selectedViewID = HomeTab.search.rawValue
     }
-    
 }
 
 struct NavigationBar_Previews: PreviewProvider {

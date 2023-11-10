@@ -8,21 +8,16 @@
 import SwiftUI
 
 public struct Sidebar: View {
-    
     public init(minWindowWidth: CGFloat = 800,
                 minWindowHeight: CGFloat = 600,
                 backgroundTranslucency: Bool = true,
                 backgroundColor: Color,
                 foregroundColor: Color,
-                header: String? = nil,
-                headerFont: Font? = nil,
+                header: AnyView? = nil,
+                footer: AnyView? = nil,
                 itemGroups: [ItemGroup],
-                itemFont: Font? = nil,
-                actionIcon: Image? = nil,
-                actionTooltip: String? = nil,
-                actionShortcut: KeyboardShortcut? = nil,
-                action: (() -> Void)? = nil) {
-        
+                itemFont: Font? = nil)
+    {
         self.minWindowWidth = minWindowWidth
         self.minWindowHeight = minWindowHeight
         
@@ -30,14 +25,9 @@ public struct Sidebar: View {
         self.backgroundColor = backgroundColor
         self.foregroundColor = foregroundColor
         self.header = header
-        self.headerFont = headerFont
         self.itemGroups = itemGroups
         self.itemFont = itemFont
-        
-        self.actionIcon = actionIcon
-        self.actionTooltip = actionTooltip
-        self.actionShortcut = actionShortcut
-        self.action = action
+        self.footer = footer
         
         _showSidebar = State(initialValue: sidebarShown)
     }
@@ -50,16 +40,12 @@ public struct Sidebar: View {
                             backgroundColor: backgroundColor,
                             foregroundColor: foregroundColor,
                             header: header,
-                            headerFont: headerFont,
+                            footer: footer,
                             itemGroups: itemGroups,
-                            itemFont: itemFont,
-                            actionIcon: actionIcon,
-                            actionTooltip: actionTooltip,
-                            actionShortcut: actionShortcut,
-                            action: action)
-                .frame(maxHeight: .infinity)
-                .frame(width: Values.sidebarWidth)
-                .ignoresSafeArea(.keyboard, edges: .bottom)
+                            itemFont: itemFont)
+                    .frame(maxHeight: .infinity)
+                    .frame(width: Values.sidebarWidth)
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
             }
             
             Divider()
@@ -68,8 +54,8 @@ public struct Sidebar: View {
             if let view = itemGroups
                 .flatMap({ $0.items })
                 .filter({ $0.id == sidebarSelection.selectedViewID })
-                .first?.view {
-                
+                .first?.view
+            {
                 view
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.top, Values.middlePadding)
@@ -88,7 +74,7 @@ public struct Sidebar: View {
             }
         }
         .onChange(of: itemGroups.first?.items) { newItems in
-             self.sidebarSelection.selectedViewID = newItems?.first?.id ?? ""
+            self.sidebarSelection.selectedViewID = newItems?.first?.id ?? ""
         }
         .onChange(of: sidebarShown) { value in
             withAnimation(.easeInOut(duration: 0.2)) {
@@ -96,8 +82,6 @@ public struct Sidebar: View {
             }
         }
     }
-    
-    
     
     // MARK: - Variables
     
@@ -112,14 +96,8 @@ public struct Sidebar: View {
     private let backgroundTranslucency: Bool
     private let backgroundColor: Color
     private let foregroundColor: Color
-    private let header: String?
-    private let headerFont: Font?
+    private let header: AnyView?
+    private let footer: AnyView?
     private let itemGroups: [ItemGroup]
     private let itemFont: Font?
-    
-    private let actionIcon: Image?
-    private let actionTooltip: String?
-    private let actionShortcut: KeyboardShortcut?
-    private let action: (() -> Void)?
-    
 }

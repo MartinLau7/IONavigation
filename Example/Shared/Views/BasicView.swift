@@ -15,7 +15,7 @@ struct BasicView: View {
                 .padding()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-        .background(Color("primaryBackground"))
+        .background(.primaryBackground)
     }
     
 }
