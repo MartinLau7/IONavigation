@@ -44,14 +44,8 @@ struct SidebarView: View {
                 sidebar.background(backgroundColor)
             }
         #else
-            .background(backgroundColor)
+                .background(backgroundColor)
         #endif
-            .onAppear {
-                print("1")
-            }
-            .onAppear(perform: {
-                print("1")
-            })
     }
     
     // MARK: - Variables

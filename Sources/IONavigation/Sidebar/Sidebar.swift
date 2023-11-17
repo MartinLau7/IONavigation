@@ -70,11 +70,12 @@ public struct Sidebar: View {
         .macWindowSize(minWidth: minWindowWidth, minHeight: minWindowHeight)
         .onAppear {
             DispatchQueue.main.async {
-                self.sidebarSelection.selectedViewID = self.itemGroups.first?.items.first?.id ?? ""
+                if self.sidebarSelection.selectedViewID.isEmpty {
+                    if let id = self.itemGroups.first?.items.first?.id {
+                        self.sidebarSelection.selectedViewID = id
+                    }
+                }
             }
-        }
-        .onChange(of: itemGroups.first?.items) { newItems in
-            self.sidebarSelection.selectedViewID = newItems?.first?.id ?? ""
         }
         .onChange(of: sidebarShown) { value in
             withAnimation(.easeInOut(duration: 0.2)) {
