@@ -58,12 +58,10 @@ public struct Sidebar: View {
             {
                 view
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.top, Values.middlePadding)
                     .ignoresSafeArea(.all)
             } else {
                 Text("")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.top, Values.middlePadding)
                     .ignoresSafeArea(.all)
             }
         }
